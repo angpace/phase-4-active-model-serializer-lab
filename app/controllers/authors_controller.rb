@@ -3,7 +3,10 @@ class AuthorsController < ApplicationController
 
   def index
     authors = Author.all 
-    render json: authors
+    render json: authors.to_json(only: [:name], 
+    include: [profile: { only: [:username, :email, :bio, :avatar_url]}, 
+    posts: { only: [:title, :short_content]}
+  ])
   end
 
   def show
